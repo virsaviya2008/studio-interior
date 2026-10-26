@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ЛИНИЯ — студия дизайна интерьеров и ремонта в Минске</title>
+<meta name="description" content="Дизайн интерьеров и ремонт под ключ в Минске. Смета и сроки фиксируем в договоре, реализуем 1:1 с проектом, ведём авторский надзор.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF9F4; --ink:#0E0D0C; --mute:#7A7772; --line:#E3DFD8; --line-d:#2A2826; --grid:#ECE8E1;
+  --max:1440px; --pad:20px; --gut:20px; --cols:6;
+  --ease:cubic-bezier(.2,.6,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.6 Montserrat,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit;color:inherit;background:none;border:0;border-radius:0}
+button{cursor:pointer}
+::selection{background:var(--ink);color:var(--bg)}
+:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+.dark :focus-visible{outline-color:var(--bg)}
+
+/* ---------- сетка ---------- */
+.container{max-width:var(--max);margin:0 auto;padding:0 var(--pad);position:relative;z-index:1}
+.g{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gut)}
+.bg-grid,.sec-grid{position:fixed;inset:0;pointer-events:none;z-index:0}
+.sec-grid{position:absolute}
+.bg-grid .container,.sec-grid .container{height:100%;display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gut);z-index:0}
+.bg-grid i,.sec-grid i{border-left:1px solid var(--grid);height:100%}
+.bg-grid i:last-child,.sec-grid i:last-child{border-right:1px solid var(--grid)}
+.sec-grid i{border-color:var(--line-d)!important}
+
+/* ---------- типографика ---------- */
+.h1,.h2,.h3,.big{font-weight:600;text-transform:uppercase;letter-spacing:-.03em;line-height:.95}
+.h1{font-size:clamp(44px,7.4vw,120px)}
+.h2{font-size:clamp(32px,4.6vw,64px)}
+.h3{font-size:clamp(18px,1.6vw,22px);letter-spacing:-.01em;line-height:1.1}
+.big{font-size:clamp(44px,6.4vw,96px)}
+.alt{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-weight:500;text-transform:none;font-size:1.14em;letter-spacing:0;line-height:0}
+.txt{font-size:13px;line-height:1.65;color:var(--mute)}
+.txt-l{font-size:14px;line-height:1.65;color:var(--mute)}
+.lbl{font-size:11px;line-height:1.4;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.dark{background:var(--ink);color:var(--bg);position:relative}
+
+/* ---------- кнопки ---------- */
+.btn{display:flex;align-items:center;justify-content:space-between;width:100%;height:52px;padding:0 20px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:500;letter-spacing:.02em;border-radius:2px;transition:background .3s}
+.btn .arr{font-size:18px;transition:transform .45s var(--ease)}
+.btn:hover .arr{transform:translateX(10px)}
+.btn--light{background:var(--bg);color:var(--ink)}
+.link{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:500;border-bottom:1px solid currentColor;padding-bottom:2px}
+.link .arr{transition:transform .4s var(--ease)}
+.link:hover .arr{transform:translateX(6px)}
+
+/* ---------- появление ---------- */
+.js .rv{opacity:0;transform:translateY(20px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* ---------- фото ---------- */
+.ph{position:relative;overflow:hidden;background:var(--grid)}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+.ph:hover img{transform:scale(1.04)}
+
+/* ---------- секции ---------- */
+section{position:relative}
+.sec{padding-top:140px}
+.sh{row-gap:28px;margin-bottom:56px}
+.sh .lbl{grid-column:1/-1}
+.sh .h2{grid-column:1/5}
+.sh .side{grid-column:5/7;align-self:end}
+
+/* ---------- шапка ---------- */
+.hdr{padding-top:24px;padding-bottom:24px;align-items:start}
+.logo{grid-column:1;font-weight:600;font-size:24px;letter-spacing:-.03em;line-height:1}
+.hdr-sub{grid-column:2;font-size:12px;line-height:1.5}
+.hdr-sub span{color:var(--mute)}
+.hdr-nav{grid-column:3;display:flex;flex-direction:column;font-size:12px;line-height:1.55}
+.hdr-nav a,.ftr-nav a{position:relative;width:max-content}
+.hdr-nav a::after,.ftr-nav a::after{content:"";position:absolute;left:0;right:100%;bottom:1px;height:1px;background:currentColor;transition:right .4s var(--ease)}
+.hdr-nav a:hover::after,.ftr-nav a:hover::after{right:0}
+.hdr-time{grid-column:4;font-size:12px;line-height:1.5;color:var(--mute)}
+.hdr-phone{grid-column:5;font-size:12px;font-weight:500;line-height:1.5}
+.lang{grid-column:6;justify-self:end;display:flex;gap:6px;font-size:11px;letter-spacing:.06em;color:var(--mute)}
+.lang button{color:var(--mute);padding:0 2px}
+.lang button.on{color:var(--ink)}
+.burger{display:none}
+.mmenu{display:none}
+
+/* ---------- первый экран ---------- */
+.hero-top{padding-top:72px;padding-bottom:40px;row-gap:32px}
+.hero-top .h1{grid-column:1/5}
+.hero-side{grid-column:5/7;align-self:end;display:flex;flex-direction:column;gap:24px}
+.hero-ph{aspect-ratio:16/7.2}
+.hero-cap{padding-top:14px}
+.hero-cap .lbl:first-child{grid-column:1/4}
+.hero-cap .lbl:last-child{grid-column:4/7;text-align:right}
+
+/* ---------- цифры ---------- */
+.stats{border-bottom:1px solid var(--line)}
+.stat{border-top:1px solid var(--line);padding:22px 0 26px;align-items:end}
+.stat .big{grid-column:1/5;font-size:clamp(40px,5vw,76px)}
+.stat .txt{grid-column:5/7;max-width:340px}
+
+/* ---------- проекты ---------- */
+.pr-head{margin-bottom:56px;align-items:end;row-gap:28px}
+.pr-head .lbl{grid-column:1/-1}
+.pr-head .h2:nth-of-type(1){grid-column:1/5}
+.pr-head .h2:nth-of-type(2){grid-column:5/7;text-align:right}
+.cards{row-gap:var(--gut)}
+.card{position:relative}
+.card--wide{grid-column:1/-1}
+.card--wide .ph{aspect-ratio:16/8.4}
+.card--half{grid-column:span 3}
+.card--half .ph{aspect-ratio:4/4.6}
+.plate{position:absolute;top:20px;right:20px;width:calc((100% - 5*var(--gut))/6*2 + var(--gut));min-width:280px;background:var(--bg);padding:22px 22px 24px;display:flex;flex-direction:column;gap:12px;z-index:4;border-radius:2px}
+.card--half .plate{width:calc(100% - 40px);max-width:340px}
+.plate .h3{margin-bottom:2px}
+.plate .link{align-self:flex-start;margin-top:6px}
+.tags{position:absolute;left:20px;bottom:20px;display:flex;gap:6px;flex-wrap:wrap;z-index:4}
+.tag{background:var(--bg);font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:6px 9px 5px;border-radius:2px}
+
+/* до / после */
+.ba{--pos:50%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none}
+.ba img{position:absolute;inset:0;pointer-events:none}
+.ba:hover img{transform:none}
+.ba-before{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--pos)) 0 0);z-index:1}
+.ba-handle{position:absolute;top:0;bottom:0;left:var(--pos);width:1px;background:var(--bg);z-index:3;transform:translateX(-.5px)}
+.ba-knob{position:absolute;top:50%;left:0;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-size:14px;color:var(--ink);cursor:ew-resize}
+.ba-knob:focus-visible{outline:1px solid var(--bg);outline-offset:4px}
+.ba-l{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:var(--bg);color:var(--ink);padding:5px 8px 4px;border-radius:2px;white-space:nowrap}
+.ba-l--b{right:36px}
+.ba-l--a{left:36px}
+
+/* ---------- гарантия ---------- */
+.guarantee{margin-top:140px;padding:150px 0;text-align:center}
+.guarantee .lbl{margin-bottom:40px}
+.guarantee .h2{font-size:clamp(34px,5.6vw,84px);line-height:.98}
+.guarantee .h2 .m{color:var(--mute)}
+.guarantee .txt{max-width:460px;margin:44px auto 0}
+
+/* ---------- этапы ---------- */
+.steps{row-gap:0;border-bottom:1px solid var(--line)}
+.step{grid-column:span 2;border-top:1px solid var(--line);padding:24px 20px 40px 0;display:flex;flex-direction:column;gap:14px;min-height:280px}
+.step .num{font-size:11px;letter-spacing:.06em;color:var(--mute)}
+.step .h3{margin-top:28px}
+.step .txt{max-width:340px}
+.step .term{margin-top:auto;font-size:12px;font-weight:500}
+.steps-cta{margin-top:40px}
+
+/* ---------- калькулятор ---------- */
+.calc-row{border-top:1px solid var(--line);padding:28px 0 36px;row-gap:28px}
+.calc-types{grid-column:1/4;min-width:0;display:flex;flex-direction:column}
+.opt{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px;font-weight:500}
+.opt:first-of-type{border-top:1px solid var(--line)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .box{width:12px;height:12px;border:1px solid var(--ink);border-radius:2px;flex:none;transition:background .25s}
+.opt input:checked + .box{background:var(--ink)}
+.opt input:focus-visible + .box{outline:1px solid var(--ink);outline-offset:3px}
+.opt .rate{margin-left:auto;font-size:12px;font-weight:400;color:var(--mute)}
+.calc-area{grid-column:4/7;display:flex;flex-direction:column;gap:20px}
+.area-val{display:flex;align-items:baseline;justify-content:space-between}
+.range{-webkit-appearance:none;appearance:none;width:100%;height:24px;background:transparent;cursor:pointer}
+.range::-webkit-slider-runnable-track{height:1px;background:linear-gradient(to right,var(--ink) var(--fill,20%),var(--line) var(--fill,20%))}
+.range::-moz-range-track{height:1px;background:var(--line)}
+.range::-moz-range-progress{height:1px;background:var(--ink)}
+.range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-7.5px;background:var(--ink);border-radius:2px;border:0}
+.range::-moz-range-thumb{width:16px;height:16px;background:var(--ink);border-radius:2px;border:0}
+.range-scale{display:flex;justify-content:space-between}
+.calc-res .big{font-size:clamp(32px,4.6vw,64px)}
+.calc-res{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 0 32px;row-gap:24px;align-items:end;margin-bottom:20px}
+.res-price{grid-column:1/4}
+.res-term{grid-column:4/6}
+.res-note{grid-column:6/7}
+.res-price .lbl,.res-term .lbl{margin-bottom:14px}
+
+/* ---------- стоимость ---------- */
+.prices{row-gap:0}
+.tr{border-top:1px solid var(--line);padding:24px 0 26px;display:flex;justify-content:space-between;align-items:flex-start;gap:24px;min-height:120px}
+.tr:nth-child(1){grid-column:1/4;grid-row:1}
+.tr:nth-child(2){grid-column:1/5;grid-row:2}
+.tr:nth-child(3){grid-column:1/6;grid-row:3}
+.tr:nth-child(4){grid-column:1/7;grid-row:4;border-bottom:1px solid var(--line)}
+.tr .txt{margin-top:8px;max-width:320px}
+.tr .pr{font-weight:600;font-size:clamp(20px,2vw,28px);letter-spacing:-.03em;white-space:nowrap;text-transform:uppercase;line-height:1}
+.tr .pr small{font-size:.5em;letter-spacing:0;font-weight:500;color:var(--mute);margin-right:4px}
+.prices-ph{grid-column:5/7;grid-row:1/3;margin-bottom:var(--gut)}
+.prices-ph img{position:absolute;inset:0}
+
+/* ---------- команда ---------- */
+.team{margin-top:140px;padding:140px 0 120px}
+.team .lbl{color:var(--mute)}
+.team .txt{color:var(--mute)}
+.t-list{border-bottom:1px solid var(--line-d)}
+.t-row{border-top:1px solid var(--line-d);padding:22px 0 24px;align-items:baseline;row-gap:10px;cursor:default}
+.t-row .t-name{grid-column:1/4;font-weight:600;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;font-size:clamp(26px,3.4vw,48px);transition:color .35s,transform .5s var(--ease)}
+.t-row .lbl{grid-column:4/5}
+.t-row .txt{grid-column:5/7;max-width:360px}
+.t-row img{display:none}
+.t-list:hover .t-name{color:var(--mute)}
+.t-list .t-row:hover .t-name{color:var(--bg);transform:translateX(12px)}
+.t-prev{position:fixed;left:0;top:0;width:230px;aspect-ratio:3/4;z-index:60;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.94);transition:opacity .35s,transform .45s var(--ease);background:var(--line-d);overflow:hidden}
+.t-prev.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.t-prev img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- FAQ ---------- */
+.faq{border-bottom:1px solid var(--line)}
+.q{border-top:1px solid var(--line)}
+.q-btn{width:100%;text-align:left;padding:22px 0;align-items:baseline}
+.q-btn .lbl{grid-column:1}
+.q-btn .q-t{grid-column:2/6;font-size:clamp(15px,1.4vw,19px);font-weight:500;line-height:1.35;letter-spacing:-.01em}
+.q-btn .x{grid-column:6;justify-self:end;font-size:26px;line-height:.8;font-weight:400;transform:rotate(45deg);transition:transform .45s var(--ease)}
+.q.open .x{transform:rotate(0)}
+.q-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+.q.open .q-a{grid-template-rows:1fr}
+.q-a > div{overflow:hidden}
+.q-a .g > p{grid-column:2/6;padding:0 0 28px;max-width:640px}
+.faq-cta{margin-top:40px}
+
+/* ---------- форма ---------- */
+.form-wrap{row-gap:48px}
+.form-info{grid-column:1/4;display:flex;flex-direction:column;gap:28px}
+.form-info .ph{aspect-ratio:4/3;max-width:460px;margin-top:12px}
+.form{grid-column:4/7;display:flex;flex-direction:column;gap:6px}
+.field{display:flex;flex-direction:column;gap:2px;padding-top:12px}
+.field input,.field textarea{border-bottom:1px solid var(--line);padding:10px 0;font-size:15px;outline:none;transition:border-color .3s;resize:none}
+.field textarea{min-height:92px}
+.field input:focus,.field textarea:focus{border-color:var(--ink)}
+.field input::placeholder,.field textarea::placeholder{color:#B5B1AA}
+.field .err-t{font-size:11px;min-height:16px;color:var(--ink)}
+.field.err input{border-color:var(--ink)}
+.chk{display:flex;gap:12px;align-items:flex-start;margin-top:18px;cursor:pointer;font-size:12px;line-height:1.55;color:var(--mute)}
+.chk input{position:absolute;opacity:0;pointer-events:none}
+.chk .box{width:14px;height:14px;border:1px solid var(--ink);border-radius:2px;flex:none;margin-top:2px;display:grid;place-items:center;font-size:10px;line-height:1;color:var(--bg);transition:background .25s}
+.chk input:checked + .box{background:var(--ink)}
+.chk input:focus-visible + .box{outline:1px solid var(--ink);outline-offset:3px}
+.chk.err .box{outline:1px solid var(--ink);outline-offset:3px}
+.chk a{color:var(--ink);border-bottom:1px solid var(--line)}
+.form .btn{margin-top:26px}
+.form-ok{display:none;border-top:1px solid var(--line);padding-top:28px}
+.form.sent > :not(.form-ok){display:none}
+.form.sent .form-ok{display:block}
+
+/* ---------- подвал ---------- */
+.ftr{margin-top:140px;padding:0 0 28px}
+.ftr .btn--light{height:64px;font-size:15px}
+.ftr-cta{padding-top:24px}
+.ftr-main{padding:96px 0 120px;row-gap:40px}
+.ftr-main > div{display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.6}
+.ftr-main .lbl{margin-bottom:6px}
+.ftr-logo{grid-column:1/3}
+.ftr-logo .logo{font-size:clamp(48px,6vw,88px)}
+.ftr-nav a:hover,.ftr-soc a:hover{color:var(--bg)}
+.ftr-main a{color:#CFCBC4;transition:color .3s;width:max-content}
+.ftr-top{align-items:flex-end}
+.to-top{display:inline-flex;align-items:center;gap:10px;font-size:12px;border:1px solid var(--line-d);padding:12px 16px;border-radius:2px;color:var(--bg);transition:border-color .3s}
+.to-top:hover{border-color:var(--bg)}
+.to-top span{transition:transform .4s var(--ease)}
+.to-top:hover span{transform:translateY(-4px)}
+.ftr-legal{border-top:1px solid var(--line-d);padding-top:20px;row-gap:8px}
+.ftr-legal .lbl:first-child{grid-column:1/4}
+.ftr-legal .lbl:last-child{grid-column:4/7;text-align:right}
+.ftr-legal a{border-bottom:1px solid var(--line-d)}
+
+/* ---------- мобильная панель, тост ---------- */
+.mbar{display:none}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);font-size:12px;padding:12px 18px;border-radius:2px;opacity:0;pointer-events:none;transition:opacity .35s,transform .35s var(--ease);z-index:120}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ======================= адаптив ======================= */
+@media (max-width:1100px){
+  .hdr-time{display:none}
+  .hdr-phone{grid-column:4/6}
+  .hero-top .h1{grid-column:1/-1}
+  .hero-side{grid-column:4/7}
+  .card--half .plate{position:relative;top:auto;right:auto;width:100%;max-width:none;margin-top:0}
+}
+@media (max-width:900px){
+  :root{--cols:2;--gut:16px}
+  .bg-grid i:nth-child(n+3),.sec-grid i:nth-child(n+3){display:none}
+  .bg-grid i:nth-child(2),.sec-grid i:nth-child(2){border-right:1px solid var(--grid)}
+  .g > *{grid-column:1/-1!important}
+  .h1{font-size:min(44px,11vw)}
+  .h2{font-size:clamp(28px,8.4vw,40px)}
+  .sec{padding-top:96px}
+  .sh{margin-bottom:36px}
+
+  .hdr{position:sticky;top:0;z-index:90;background:var(--bg);padding-top:16px;padding-bottom:16px;border-bottom:1px solid var(--line);align-items:center}
+  .hdr > :not(.logo):not(.burger){display:none}
+  .burger{display:flex;flex-direction:column;justify-content:center;gap:6px;justify-self:end;width:32px;height:32px;grid-column:2!important;grid-row:1}
+  .logo{grid-row:1;grid-column:1!important}
+  .burger i{display:block;height:1px;background:var(--ink);transition:transform .4s var(--ease)}
+  .burger.on i:first-child{transform:translateY(3.5px) rotate(45deg)}
+  .burger.on i:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+  .mmenu{display:flex;flex-direction:column;justify-content:space-between;position:fixed;inset:65px 0 0;background:var(--bg);z-index:85;padding:32px var(--pad) 100px;opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .35s,transform .35s var(--ease),visibility .35s}
+  .mmenu.on{opacity:1;visibility:visible;transform:none}
+  .mmenu nav{display:flex;flex-direction:column}
+  .mmenu nav a{font-weight:600;text-transform:uppercase;letter-spacing:-.03em;font-size:34px;line-height:1;padding:14px 0;border-bottom:1px solid var(--line)}
+  .mmenu nav a:first-child{border-top:1px solid var(--line)}
+  .mmenu-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;font-size:13px}
+  .mmenu .lang{grid-column:auto}
+  section[id],#form{scroll-margin-top:64px}
+
+  .hero-top{padding-top:40px;padding-bottom:28px;row-gap:24px}
+  .hero-side{gap:20px}
+  .hero-ph{aspect-ratio:4/4.4}
+  .hero-cap .lbl:last-child{text-align:left}
+
+  .stat{grid-template-columns:auto 1fr;padding:18px 0 20px;row-gap:8px}
+  .stat .big{font-size:clamp(34px,10vw,44px)}
+
+  .pr-head .h2:nth-of-type(2){text-align:left}
+  .pr-head{margin-bottom:32px;row-gap:14px}
+  .plate{position:relative;top:auto;right:auto;width:100%!important;min-width:0;max-width:none!important;padding:18px 0 4px;background:transparent}
+  .card--wide .ph{aspect-ratio:4/4}
+  .card--half .ph{aspect-ratio:4/4.4}
+  .tags{left:12px;bottom:12px}
+  .cards{row-gap:44px}
+  .ba-knob{width:40px;height:40px}
+  .ba-l--b{right:28px}.ba-l--a{left:28px}
+
+  .guarantee{margin-top:96px;padding:96px 0}
+  .guarantee .h2{font-size:8vw}
+  .step{grid-column:span 1!important;min-height:0;padding:20px 12px 28px 0}
+  .step .h3{margin-top:12px;font-size:16px}
+  .steps .step:nth-child(odd){padding-right:16px}
+
+  .opt .rate{display:none}
+  .res-term{grid-column:1/-1}
+
+  .tr{grid-row:auto!important;flex-direction:column;gap:12px;min-height:0}
+  .prices-ph{grid-row:auto!important;aspect-ratio:4/3;order:-1;margin-bottom:28px}
+
+  .team{margin-top:96px;padding:96px 0 80px}
+  .t-row{grid-template-columns:64px 1fr;column-gap:16px;align-items:start}
+  .t-row img{display:block;grid-column:1!important;grid-row:1/4;width:64px;height:80px;object-fit:cover}
+  .t-row > :not(img){grid-column:2!important}
+  .t-row .t-name{font-size:24px}
+  .t-prev{display:none}
+
+  .q-btn{grid-template-columns:32px 1fr 24px;column-gap:12px}
+  .q-btn .lbl{grid-column:1!important}
+  .q-btn .q-t{grid-column:2!important}
+  .q-btn .x{grid-column:3!important}
+  .q-a .g{grid-template-columns:32px 1fr;column-gap:12px}
+  .q-a .g > p{grid-column:2!important}
+
+  .ftr{margin-top:96px}
+  .ftr-main{padding:64px 0 72px}
+  .ftr-main > div:not(.ftr-logo){grid-column:span 1!important}
+  .ftr-legal .lbl:last-child{text-align:left}
+
+  body{padding-bottom:52px}
+  .mbar{display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:95;height:52px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:500;transition:transform .4s var(--ease)}
+  .mbar a{display:flex;align-items:center;justify-content:center;gap:8px}
+  .mbar a + a{border-left:1px solid var(--line-d)}
+  .mbar.hide{transform:translateY(100%)}
+  .toast{bottom:72px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"><div class="container"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<!-- ===== ШАПКА ===== -->
+<header class="hdr container g">
+  <a href="#top" class="logo" aria-label="ЛИНИЯ — на главную">ЛИН<span class="alt">и</span>Я</a>
+  <div class="hdr-sub">Студия интерьеров<br><span>Минск, с 2017</span></div>
+  <nav class="hdr-nav" aria-label="Меню">
+    <a href="#projects">Проекты</a>
+    <a href="#steps">Этапы</a>
+    <a href="#prices">Стоимость</a>
+    <a href="#team">Команда</a>
+    <a href="#faq">Вопросы</a>
+  </nav>
+  <div class="hdr-time">Пн–Пт 10:00–19:00<br>Сб по записи</div>
+  <a class="hdr-phone" href="tel:+375296102424">+375 29 610-24-24<br><span class="lbl">Перезвоним за час</span></a>
+  <div class="lang" role="group" aria-label="Язык"><button class="on" type="button">RU</button>|<button type="button" data-en>EN</button></div>
+  <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false"><i></i><i></i></button>
+</header>
+
+<div class="mmenu" id="mmenu">
+  <nav aria-label="Мобильное меню">
+    <a href="#projects">Проекты</a>
+    <a href="#steps">Этапы</a>
+    <a href="#prices">Стоимость</a>
+    <a href="#team">Команда</a>
+    <a href="#faq">Вопросы</a>
+  </nav>
+  <div class="mmenu-foot">
+    <div><a href="tel:+375296102424"><b>+375 29 610-24-24</b></a><br><span class="lbl">Пн–Пт 10:00–19:00</span></div>
+    <div class="lang"><button class="on" type="button">RU</button>|<button type="button" data-en>EN</button></div>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ===== ПЕРВЫЙ ЭКРАН ===== -->
+<section class="hero container">
+  <div class="g hero-top">
+    <h1 class="h1 rv">Рем<span class="alt">о</span>нт, как<br>на карт<span class="alt">и</span>нке</h1>
+    <div class="hero-side rv">
+      <p class="txt-l">Фиксируем смету и сроки в договоре до начала работ. Строим ровно по проекту — дизайнер ведёт объект до последней розетки.</p>
+      <a class="btn" href="#form">Обсудить проект <span class="arr">→</span></a>
+    </div>
+  </div>
+  <figure class="ph hero-ph rv">
+    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=80" alt="Светлая гостиная с панорамными окнами и деревянной стеной" fetchpriority="high">
+  </figure>
+  <div class="g hero-cap">
+    <span class="lbl">Квартира на Кальварийской · 86 м² · сдана в 2025</span>
+    <span class="lbl">Визуализация → реальность: совпадение 1:1</span>
+  </div>
+</section>
+
+<!-- ===== ЦИФРЫ ===== -->
+<section class="sec container" aria-label="Студия в цифрах">
+  <div class="g sh"><span class="lbl rv">(01) Студия в цифрах</span></div>
+  <div class="stats">
+    <div class="g stat rv"><div class="big"><span data-count="9">9</span> лет</div><p class="txt">Работаем в Минске с 2017 года. Знаем сюрпризы старого фонда и новостроек — и закладываем их в смету заранее, а не «по ходу».</p></div>
+    <div class="g stat rv"><div class="big"><span data-count="112">112</span> квартир</div><p class="txt">От 34 до 240 м². Каждую сдаём с актом сверки: проект против реальности, пункт за пунктом.</p></div>
+    <div class="g stat rv"><div class="big">0 сорванных сроков</div><p class="txt">Срок прописан в договоре, за каждый день просрочки — неустойка. Платить её пока не приходилось.</p></div>
+    <div class="g stat rv"><div class="big"><span data-count="14">14</span> специалистов</div><p class="txt">Дизайнеры, инженер-сметчик, прорабы и собственные бригады. Никаких случайных субподрядчиков.</p></div>
+  </div>
+</section>
+
+<!-- ===== ПРОЕКТЫ ===== -->
+<section class="sec container" id="projects">
+  <div class="g pr-head">
+    <span class="lbl rv">(02) Проекты</span>
+    <h2 class="h2 rv">Как на визу<span class="alt">а</span>лизации</h2>
+    <h2 class="h2 rv">В ср<span class="alt">о</span>к</h2>
+  </div>
+
+  <div class="g cards">
+    <article class="card card--wide rv">
+      <div class="ph ba" id="ba" style="--pos:50%">
+        <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=2000&q=80" alt="После: светлая гостиная с круглыми зеркалами" loading="lazy">
+        <div class="ba-before"><img src="https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?auto=format&fit=crop&w=2000&q=80" alt="До: черновые работы, распил доски на полу" loading="lazy"></div>
+        <div class="ba-handle">
+          <span class="ba-l ba-l--b">До</span>
+          <button class="ba-knob" type="button" role="slider" aria-label="Сравнить до и после" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">‹ ›</button>
+          <span class="ba-l ba-l--a">После</span>
+        </div>
+        <div class="tags"><span class="tag">Минск-Мир</span><span class="tag">92 м²</span><span class="tag">15 недель</span></div>
+      </div>
+      <div class="plate">
+        <span class="lbl">Дизайн + ремонт</span>
+        <h3 class="h3">Квартира для семьи с двумя детьми</h3>
+        <p class="txt">Задача: из бетонной коробки — светлый дом за 58 000 BYN и 16 недель. Итог: 57 400 BYN и 15 недель. Мебель стоит там, где стояла на визуализации.</p>
+        <a class="link" href="#form">Подробнее <span class="arr">→</span></a>
+      </div>
+    </article>
+
+    <article class="card card--half rv">
+      <div class="ph">
+        <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&q=80" alt="Светлая кухня с островом и деревянными фасадами" loading="lazy">
+        <div class="tags"><span class="tag">Центр</span><span class="tag">68 м²</span></div>
+      </div>
+      <div class="plate">
+        <span class="lbl">Ремонт под ключ</span>
+        <h3 class="h3">Кухня-гостиная в сталинке</h3>
+        <p class="txt">Старые перекрытия и проводка под замену. Объединили кухню с гостиной — смета не изменилась ни на рубль.</p>
+        <a class="link" href="#form">Подробнее <span class="arr">→</span></a>
+      </div>
+    </article>
+
+    <article class="card card--half rv">
+      <div class="ph">
+        <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=1200&q=80" alt="Спальня в тёплых тонах с плетёными светильниками" loading="lazy">
+        <div class="tags"><span class="tag">Уручье</span><span class="tag">54 м²</span></div>
+      </div>
+      <div class="plate">
+        <span class="lbl">Дизайн-проект + надзор</span>
+        <h3 class="h3">Тихая спальня в панельном доме</h3>
+        <p class="txt">Шумоизоляция, скрытые двери, свет в трёх сценариях. Дизайнер был на объекте каждую неделю — до финальной уборки.</p>
+        <a class="link" href="#form">Подробнее <span class="arr">→</span></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===== ГАРАНТИЯ ===== -->
+<section class="dark guarantee" aria-label="Гарантия">
+  <div class="container">
+    <p class="lbl rv">Гарантия в договоре</p>
+    <p class="h2 rv">
+      Цена и срок —<br>
+      <span class="m">не обещание</span><br>
+      <span class="m">в переписке,</span><br>
+      а пункт дог<span class="alt">о</span>вора
+    </p>
+    <p class="txt rv">Превысили смету — разницу оплачиваем сами. Сорвали срок — 0,2% от стоимости работ за каждый день. Отличие от проекта по нашей вине — переделываем бесплатно.</p>
+  </div>
+</section>
+
+<!-- ===== ЭТАПЫ ===== -->
+<section class="sec container" id="steps">
+  <div class="g sh">
+    <span class="lbl rv">(03) Этапы работы</span>
+    <h2 class="h2 rv">От замера<br>до кл<span class="alt">ю</span>чей</h2>
+    <p class="txt side rv">У каждого этапа — дата в договоре и приёмка. Следующий начинаем только после вашей подписи.</p>
+  </div>
+  <div class="g steps">
+    <div class="step rv"><span class="num">01</span><h3 class="h3">Замер и бриф</h3><p class="txt">Обмеряем квартиру лазером, проверяем стены и коммуникации. Говорим о том, как вы живёте, а не о «стиле».</p><span class="term">≈ 3 дня</span></div>
+    <div class="step rv"><span class="num">02</span><h3 class="h3">Планировка</h3><p class="txt">2–3 варианта расстановки. Выбираем один и больше к нему не возвращаемся.</p><span class="term">≈ 1 неделя</span></div>
+    <div class="step rv"><span class="num">03</span><h3 class="h3">Визуализации</h3><p class="txt">Фотореалистичные виды каждой комнаты с реальными материалами — теми, что потом купим.</p><span class="term">≈ 2 недели</span></div>
+    <div class="step rv"><span class="num">04</span><h3 class="h3">Чертежи и смета</h3><p class="txt">Рабочая документация до сантиметра и смета до позиции. Обе цифры — бюджет и срок — фиксируем в договоре.</p><span class="term">≈ 2 недели</span></div>
+    <div class="step rv"><span class="num">05</span><h3 class="h3">Ремонт</h3><p class="txt">Свои бригады, прораб на объекте каждый день, дизайнер — раз в неделю. Фотоотчёт по пятницам.</p><span class="term">≈ 12–16 недель</span></div>
+    <div class="step rv"><span class="num">06</span><h3 class="h3">Комплектация и сдача</h3><p class="txt">Расставляем мебель, вешаем свет и шторы. Сверяем квартиру с визуализацией по чек-листу.</p><span class="term">≈ 2 недели</span></div>
+  </div>
+  <div class="steps-cta rv"><a class="btn" href="#form">Получить план работ для своей квартиры <span class="arr">→</span></a></div>
+</section>
+
+<!-- ===== КАЛЬКУЛЯТОР ===== -->
+<section class="sec container" id="calc">
+  <div class="g sh">
+    <span class="lbl rv">(04) Калькулятор</span>
+    <h2 class="h2 rv">Считаем<br>ч<span class="alt">е</span>стно</h2>
+    <p class="txt side rv">Предварительный расчёт за 10 секунд. Точную сумму назовём после замера — и она уже не изменится.</p>
+  </div>
+
+  <div class="g calc-row rv">
+    <fieldset class="calc-types" style="border:0">
+      <legend class="lbl" style="margin-bottom:14px">Что нужно</legend>
+      <label class="opt"><input type="radio" name="type" value="45" data-name="Дизайн-проект" data-kind="design"><span class="box"></span>Дизайн-проект<span class="rate">45 BYN/м²</span></label>
+      <label class="opt"><input type="radio" name="type" value="650" data-name="Ремонт под ключ" data-kind="reno"><span class="box"></span>Ремонт под ключ<span class="rate">650 BYN/м²</span></label>
+      <label class="opt"><input type="radio" name="type" value="680" data-name="Дизайн + ремонт" data-kind="combo" checked><span class="box"></span>Дизайн + ремонт<span class="rate">680 BYN/м²</span></label>
+    </fieldset>
+    <div class="calc-area">
+      <label class="lbl" for="area">Площадь квартиры</label>
+      <div class="area-val"><span class="big" id="areaOut">60 м²</span></div>
+      <input class="range" type="range" id="area" min="30" max="200" step="1" value="60">
+      <div class="range-scale lbl"><span>30 м²</span><span>200 м²</span></div>
+    </div>
+  </div>
+
+  <div class="g calc-res rv" aria-live="polite">
+    <div class="res-price"><p class="lbl">Стоимость</p><p class="big" id="price">от 40 800 BYN</p></div>
+    <div class="res-term"><p class="lbl">Срок</p><p class="big" id="term">≈ 18 недель</p></div>
+    <p class="res-note txt">Цена и срок после замера переходят в договор без звёздочек.</p>
+  </div>
+  <div class="rv"><a class="btn" href="#form" id="calcCta">Зафиксировать стоимость в договоре <span class="arr">→</span></a></div>
+</section>
+
+<!-- ===== СТОИМОСТЬ ===== -->
+<section class="sec container" id="prices">
+  <div class="g sh">
+    <span class="lbl rv">(05) Стоимость</span>
+    <h2 class="h2 rv">Цены без<br>звёзд<span class="alt">о</span>чек</h2>
+    <p class="txt side rv">Всё, что входит в тариф, перечислено в договоре. Всё, что не входит, — тоже.</p>
+  </div>
+  <div class="g prices">
+    <div class="tr rv"><div><h3 class="h3">Дизайн-проект</h3><p class="txt">Планировка, визуализации, чертежи, ведомость материалов.</p></div><div class="pr"><small>от</small>45 BYN/м²</div></div>
+    <div class="tr rv"><div><h3 class="h3">Дизайн + надзор</h3><p class="txt">Проект и дизайнер на объекте раз в неделю — если ремонт делает другая бригада.</p></div><div class="pr"><small>от</small>60 BYN/м²</div></div>
+    <div class="tr rv"><div><h3 class="h3">Ремонт под ключ</h3><p class="txt">По вашему или нашему проекту. Черновые и чистовые работы, материалы, уборка.</p></div><div class="pr"><small>от</small>650 BYN/м²</div></div>
+    <div class="tr rv"><div><h3 class="h3">Дизайн + ремонт</h3><p class="txt">Один договор и одна ответственность: что нарисовали, то и построили — 1:1.</p></div><div class="pr"><small>от</small>680 BYN/м²</div></div>
+    <figure class="ph prices-ph rv"><img src="https://images.unsplash.com/photo-1585128792020-803d29415281?auto=format&fit=crop&w=1000&q=80" alt="Светлая комната с паркетом ёлочкой и деревянным комодом" loading="lazy"></figure>
+  </div>
+</section>
+
+<!-- ===== КОМАНДА ===== -->
+<section class="dark team" id="team">
+  <div class="container">
+    <div class="g sh">
+      <span class="lbl rv">(06) Команда</span>
+      <h2 class="h2 rv">Люди, кот<span class="alt">о</span>рые<br>отвечают</h2>
+      <p class="txt side rv">14 человек в штате. Здесь — те, с кем вы будете говорить чаще всего.</p>
+    </div>
+    <div class="t-list">
+      <div class="g t-row rv" data-img="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=80">
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy">
+        <span class="t-name">Анна Коваль</span><span class="lbl">Основатель, ведущий дизайнер</span><p class="txt">Ведёт проект от брифа до сдачи. Отвечает за то, чтобы квартира совпала с картинкой.</p>
+      </div>
+      <div class="g t-row rv" data-img="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy">
+        <span class="t-name">Дмитрий Лебедев</span><span class="lbl">Руководитель ремонта</span><p class="txt">12 лет на объектах. Составляет график работ — и держит его.</p>
+      </div>
+      <div class="g t-row rv" data-img="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy">
+        <span class="t-name">Мария Сокол</span><span class="lbl">Дизайнер, авторский надзор</span><p class="txt">Раз в неделю на объекте с чертежами в руках. Замечает сдвинутую розетку раньше, чем её закроют плиткой.</p>
+      </div>
+      <div class="g t-row rv" data-img="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80">
+        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy">
+        <span class="t-name">Игорь Василевич</span><span class="lbl">Инженер-сметчик</span><p class="txt">Считает смету до последнего мешка смеси. Именно его цифры попадают в договор.</p>
+      </div>
+      <div class="g t-row rv" data-img="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy">
+        <span class="t-name">Елена Шарай</span><span class="lbl">Комплектатор</span><p class="txt">Заказывает материалы и мебель так, чтобы ничего не приехало позже графика.</p>
+      </div>
+    </div>
+  </div>
+  <div class="t-prev" aria-hidden="true"><img alt=""></div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="sec container" id="faq">
+  <div class="g sh">
+    <span class="lbl rv">(07) Вопросы</span>
+    <h2 class="h2 rv">Честн<span class="alt">ы</span>е<br>ответы</h2>
+    <p class="txt side rv">То, о чём спрашивают на первой встрече. Если вашего вопроса нет — задайте его дизайнеру.</p>
+  </div>
+  <div class="faq">
+    <div class="q rv"><button class="g q-btn" type="button" aria-expanded="false"><span class="lbl">01</span><span class="q-t">Что, если в жизни получится не так, как на визуализации?</span><span class="x" aria-hidden="true">×</span></button>
+      <div class="q-a"><div><div class="g"><p class="txt">Не получится: каждый узел есть в чертежах, каждый материал — в ведомости с артикулом. Дизайнер еженедельно сверяет объект с проектом, а при сдаче мы проходим чек-лист вместе с вами. Расхождение по нашей вине переделываем за свой счёт.</p></div></div></div></div>
+    <div class="q rv"><button class="g q-btn" type="button" aria-expanded="false"><span class="lbl">02</span><span class="q-t">Может ли смета вырасти в процессе?</span><span class="x" aria-hidden="true">×</span></button>
+      <div class="q-a"><div><div class="g"><p class="txt">Только если вы сами решите что-то добавить или поменять — и тогда сначала увидите новую цифру и подпишете допсоглашение. Всё, что мы не учли при замере, — наша ответственность.</p></div></div></div></div>
+    <div class="q rv"><button class="g q-btn" type="button" aria-expanded="false"><span class="lbl">03</span><span class="q-t">Что будет, если вы сорвёте срок?</span><span class="x" aria-hidden="true">×</span></button>
+      <div class="q-a"><div><div class="g"><p class="txt">Платим неустойку 0,2% от стоимости работ за каждый день просрочки. Это прописано в договоре. За 9 лет такого не случалось.</p></div></div></div></div>
+    <div class="q rv"><button class="g q-btn" type="button" aria-expanded="false"><span class="lbl">04</span><span class="q-t">Можно заказать только дизайн-проект?</span><span class="x" aria-hidden="true">×</span></button>
+      <div class="q-a"><div><div class="g"><p class="txt">Да. Чертежи сделаны так, что по ним может работать любая бригада. Если хотите, чтобы результат совпал с картинкой, добавьте авторский надзор — от 60 BYN/м² за всё вместе.</p></div></div></div></div>
+    <div class="q rv"><button class="g q-btn" type="button" aria-expanded="false"><span class="lbl">05</span><span class="q-t">Работаете с новостройками без отделки и со старым фондом?</span><span class="x" aria-hidden="true">×</span></button>
+      <div class="q-a"><div><div class="g"><p class="txt">С обоими. В новостройках начинаем с черновых работ, в старом фонде — со вскрытия и проверки перекрытий и проводки. Всё это заранее попадает в смету.</p></div></div></div></div>
+    <div class="q rv"><button class="g q-btn" type="button" aria-expanded="false"><span class="lbl">06</span><span class="q-t">Кто закупает материалы и мебель?</span><span class="x" aria-hidden="true">×</span></button>
+      <div class="q-a"><div><div class="g"><p class="txt">Мы, по ценам поставщиков без наценки — у студии партнёрские скидки до 15%. Вы видите все счета. Если хотите покупать сами, дадим ведомость с артикулами и сроками.</p></div></div></div></div>
+    <div class="q rv"><button class="g q-btn" type="button" aria-expanded="false"><span class="lbl">07</span><span class="q-t">Как устроена оплата?</span><span class="x" aria-hidden="true">×</span></button>
+      <div class="q-a"><div><div class="g"><p class="txt">Поэтапно: платите за этап только после того, как приняли предыдущий. Никаких 100% вперёд.</p></div></div></div></div>
+  </div>
+  <div class="faq-cta rv"><a class="btn" href="#form" data-msg="Хочу задать вопрос дизайнеру">Задать вопрос дизайнеру <span class="arr">→</span></a></div>
+</section>
+
+<!-- ===== ФОРМА ===== -->
+<section class="sec container" id="form">
+  <div class="g sh">
+    <span class="lbl rv">(08) Заявка</span>
+    <h2 class="h2 rv">Обсудим ваш<br>пр<span class="alt">о</span>ект</h2>
+  </div>
+  <div class="g form-wrap">
+    <div class="form-info rv">
+      <p class="txt-l">Перезвоним в течение часа в рабочее время. Первая встреча и замер — бесплатно. Уже на них назовём бюджет и срок, которые потом закрепим в договоре.</p>
+      <figure class="ph"><img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=80" alt="Архитектор работает с чертежами" loading="lazy"></figure>
+    </div>
+    <form class="form rv" id="leadForm" novalidate>
+      <div class="field"><label class="lbl" for="f-name">Имя</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться"><span class="err-t"></span></div>
+      <div class="field"><label class="lbl" for="f-phone">Телефон *</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+375 (__) ___-__-__" required><span class="err-t"></span></div>
+      <div class="field"><label class="lbl" for="f-area">Площадь, м²</label><input id="f-area" name="area" type="number" inputmode="numeric" min="10" max="1000" placeholder="Например, 64"><span class="err-t"></span></div>
+      <div class="field"><label class="lbl" for="f-msg">Комментарий</label><textarea id="f-msg" name="msg" placeholder="Новостройка или вторичка, когда хотите заехать"></textarea></div>
+      <label class="chk" id="chk"><input type="checkbox" id="f-agree" name="agree"><span class="box">✓</span><span>Согласен(на) на обработку персональных данных в соответствии с <a href="#" onclick="return false">Политикой конфиденциальности</a> и Законом РБ «О защите персональных данных».</span></label>
+      <button class="btn" type="submit">Отправить заявку <span class="arr">→</span></button>
+      <div class="form-ok"><p class="h3">Спасибо, заявка у нас.</p><p class="txt" style="margin-top:12px">Перезвоним в течение часа в рабочее время и договоримся о бесплатном замере.</p></div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== ПОДВАЛ ===== -->
+<footer class="dark ftr">
+  <div class="container">
+    <div class="ftr-cta"><a class="btn btn--light" href="#form">Обсудить проект <span class="arr">→</span></a></div>
+    <div class="g ftr-main">
+      <div class="ftr-logo"><span class="logo">ЛИН<span class="alt">и</span>Я</span><span class="lbl">Студия интерьеров и ремонта</span></div>
+      <div><span class="lbl">Адрес</span><span>Минск, ул. Октябрьская, 16,<br>офис 304</span><span class="lbl">Пн–Пт 10:00–19:00</span></div>
+      <div><span class="lbl">Контакты</span><a href="tel:+375296102424">+375 29 610-24-24</a><a href="mailto:hello@liniya.by">hello@liniya.by</a></div>
+      <div class="ftr-nav"><span class="lbl">Меню</span><a href="#projects">Проекты</a><a href="#steps">Этапы</a><a href="#prices">Стоимость</a><a href="#team">Команда</a><a href="#faq">Вопросы</a></div>
+      <div class="ftr-soc"><span class="lbl">Соцсети</span><a href="#" onclick="return false">Instagram</a><a href="#" onclick="return false">Telegram</a><a href="#" onclick="return false">Pinterest</a><a href="#" onclick="return false">Behance</a></div>
+      <div class="ftr-top"><span class="lbl">&nbsp;</span><a class="to-top" href="#top">Наверх <span>↑</span></a></div>
+    </div>
+    <div class="g ftr-legal">
+      <span class="lbl">© 2017–2026 ООО «Линия Интерьер», УНП 193000000. Минск, Республика Беларусь</span>
+      <span class="lbl"><a href="#" onclick="return false">Политика обработки персональных данных</a></span>
+    </div>
+  </div>
+</footer>
+
+<nav class="mbar" id="mbar" aria-label="Быстрые действия">
+  <a href="tel:+375296102424">Позвонить</a>
+  <a href="#form">Заявка →</a>
+</nav>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  var d=document, root=d.documentElement;
+  root.classList.add('js');
+  var $=function(s,c){return (c||d).querySelector(s)}, $$=function(s,c){return Array.prototype.slice.call((c||d).querySelectorAll(s))};
+  var fmt=function(n){return Math.round(n).toLocaleString('ru-RU')};
+
+  /* сетка поверх тёмных блоков */
+  $$('.dark').forEach(function(s){
+    var g=d.createElement('div'); g.className='sec-grid'; g.setAttribute('aria-hidden','true');
+    g.innerHTML='<div class="container">'+'<i></i>'.repeat(6)+'</div>';
+    s.insertBefore(g,s.firstChild);
+  });
+
+  /* появление при прокрутке + счётчики */
+  var countUp=function(el){
+    var to=+el.dataset.count, t0=null, dur=1400;
+    var step=function(t){ if(!t0)t0=t; var p=Math.min((t-t0)/dur,1); el.textContent=Math.round(to*(1-Math.pow(1-p,3))); if(p<1)requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  };
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting)return;
+        e.target.classList.add('in');
+        $$('[data-count]',e.target).forEach(countUp);
+        io.unobserve(e.target);
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    $$('.rv').forEach(function(el){
+      var sib=el.parentNode?Array.prototype.indexOf.call(el.parentNode.children,el):0;
+      el.style.transitionDelay=Math.min(sib%3,2)*80+'ms';
+      io.observe(el);
+    });
+  } else $$('.rv').forEach(function(el){el.classList.add('in')});
+
+  /* бургер */
+  var burger=$('.burger'), mm=$('#mmenu');
+  var setMenu=function(on){ burger.classList.toggle('on',on); mm.classList.toggle('on',on); burger.setAttribute('aria-expanded',on); burger.setAttribute('aria-label',on?'Закрыть меню':'Открыть меню'); d.body.style.overflow=on?'hidden':''; };
+  burger.addEventListener('click',function(){setMenu(!mm.classList.contains('on'))});
+  $$('a',mm).forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+
+  /* тост + EN */
+  var toast=$('#toast'), tt;
+  var say=function(m){ toast.textContent=m; toast.classList.add('on'); clearTimeout(tt); tt=setTimeout(function(){toast.classList.remove('on')},2600); };
+  $$('[data-en]').forEach(function(b){b.addEventListener('click',function(){say('English version is coming soon')})});
+
+  /* до / после */
+  var ba=$('#ba');
+  if(ba){
+    var knob=$('.ba-knob',ba), pos=50, drag=false;
+    var set=function(p){ pos=Math.max(0,Math.min(100,p)); ba.style.setProperty('--pos',pos+'%'); knob.setAttribute('aria-valuenow',Math.round(pos)); };
+    var fromX=function(x){ var r=ba.getBoundingClientRect(); set((x-r.left)/r.width*100); };
+    ba.addEventListener('pointerdown',function(e){ if(e.target.closest('.tags'))return; drag=true; ba.setPointerCapture(e.pointerId); fromX(e.clientX); });
+    ba.addEventListener('pointermove',function(e){ if(drag)fromX(e.clientX); });
+    ['pointerup','pointercancel'].forEach(function(t){ba.addEventListener(t,function(){drag=false})});
+    knob.addEventListener('keydown',function(e){
+      if(e.key==='ArrowLeft'){set(pos-5);e.preventDefault()}
+      if(e.key==='ArrowRight'){set(pos+5);e.preventDefault()}
+    });
+  }
+
+  /* калькулятор */
+  var area=$('#area'), areaOut=$('#areaOut'), price=$('#price'), term=$('#term');
+  var weeksWord=function(n){ var a=n%10,b=n%100; if(a===1&&b!==11)return 'неделя'; if(a>=2&&a<=4&&(b<12||b>14))return 'недели'; return 'недель'; };
+  var calcState={};
+  var calc=function(){
+    var t=$('input[name=type]:checked'), s=+area.value, rate=+t.value, k=t.dataset.kind;
+    var wD=Math.round(3+s*.06), wR=Math.round(8+s*.1);
+    var w=k==='design'?wD:k==='reno'?wR:wD+wR-3;
+    areaOut.textContent=s+' м²';
+    price.textContent='от '+fmt(rate*s)+' BYN';
+    term.textContent='≈ '+w+' '+weeksWord(w);
+    area.style.setProperty('--fill',((s-30)/170*100)+'%');
+    calcState={name:t.dataset.name,area:s,sum:fmt(rate*s),w:w};
+  };
+  area.addEventListener('input',calc);
+  $$('input[name=type]').forEach(function(r){r.addEventListener('change',calc)});
+  calc();
+
+  /* передача данных в форму */
+  var fArea=$('#f-area'), fMsg=$('#f-msg');
+  $('#calcCta').addEventListener('click',function(){
+    fArea.value=calcState.area;
+    fMsg.value='Расчёт на сайте: '+calcState.name+', '+calcState.area+' м², от '+calcState.sum+' BYN, ≈ '+calcState.w+' '+weeksWord(calcState.w)+'.';
+  });
+  $$('[data-msg]').forEach(function(a){a.addEventListener('click',function(){ if(!fMsg.value)fMsg.value=a.dataset.msg+': '; setTimeout(function(){fMsg.focus({preventScroll:true})},700); })});
+
+  /* команда: фото у курсора */
+  var prev=$('.t-prev'), prevImg=$('img',prev), mx=0, my=0, px=0, py=0, raf=null;
+  var loop=function(){ px+=(mx-px)*.18; py+=(my-py)*.18; prev.style.left=px+'px'; prev.style.top=py+'px'; raf=(Math.abs(mx-px)+Math.abs(my-py)>.5)?requestAnimationFrame(loop):null; };
+  $$('.t-row').forEach(function(r){
+    r.addEventListener('mouseenter',function(e){ prevImg.src=r.dataset.img; if(!prev.classList.contains('on')){px=mx=e.clientX+150;py=my=e.clientY;} prev.classList.add('on'); });
+    r.addEventListener('mouseleave',function(){ prev.classList.remove('on'); });
+    r.addEventListener('mousemove',function(e){ mx=e.clientX+150; my=e.clientY; if(!raf)raf=requestAnimationFrame(loop); });
+  });
+  var team=$('#team');
+  if('IntersectionObserver' in window){
+    var pio=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ $$('.t-row').forEach(function(r){(new Image()).src=r.dataset.img}); pio.disconnect(); } },{rootMargin:'400px'});
+    pio.observe(team);
+  }
+
+  /* FAQ */
+  $$('.q-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      var q=b.parentNode, on=!q.classList.contains('open');
+      q.classList.toggle('open',on); b.setAttribute('aria-expanded',on);
+    });
+  });
+
+  /* форма */
+  var form=$('#leadForm'), phone=$('#f-phone'), agree=$('#f-agree'), chk=$('#chk');
+  phone.addEventListener('focus',function(){ if(!phone.value)phone.value='+375 '; });
+  phone.addEventListener('input',function(){
+    var v=phone.value.replace(/\D/g,''); if(v.indexOf('375')!==0)v='375'+v.replace(/^375?/,''); v=v.slice(0,12);
+    var p='+375'; var r=v.slice(3);
+    if(r.length)p+=' ('+r.slice(0,2); if(r.length>=2)p+=')'; if(r.length>2)p+=' '+r.slice(2,5); if(r.length>5)p+='-'+r.slice(5,7); if(r.length>7)p+='-'+r.slice(7,9);
+    phone.value=p;
+  });
+  var setErr=function(input,msg){ var f=input.closest('.field'); f.classList.toggle('err',!!msg); $('.err-t',f).textContent=msg||''; };
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=true, digits=phone.value.replace(/\D/g,'');
+    if(digits.length!==12){ setErr(phone,'Укажите номер полностью — перезвоним за час'); ok=false; } else setErr(phone,'');
+    var a=fArea.value; if(a && (+a<10 || +a>1000)){ setErr(fArea,'Площадь от 10 до 1000 м²'); ok=false; } else setErr(fArea,'');
+    chk.classList.toggle('err',!agree.checked); if(!agree.checked)ok=false;
+    if(!ok){ say(agree.checked?'Проверьте поля формы':'Нужно согласие на обработку данных'); return; }
+    form.classList.add('sent');
+  });
+  agree.addEventListener('change',function(){ chk.classList.remove('err') });
+
+  /* мобильная панель: прячем у формы и в подвале */
+  var mbar=$('#mbar');
+  if('IntersectionObserver' in window){
+    var vis=new Set();
+    var mio=new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting?vis.add(e.target):vis.delete(e.target) }); mbar.classList.toggle('hide',vis.size>0); });
+    mio.observe($('#form')); mio.observe($('.ftr'));
+  }
+})();
+</script>
+</body>
+</html>
